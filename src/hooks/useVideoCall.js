@@ -43,7 +43,7 @@ const useVideoCall = () => {
       console.log(data);
       setIsMatched(true);
       // Call the matched peer
-      startPeerCall(data.peerId);
+      startPeerCall(data.CommonIdId);
     });
 
     // Handle incoming calls
