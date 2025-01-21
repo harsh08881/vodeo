@@ -40,6 +40,7 @@ const useVideoCall = () => {
     // Handle peer matched event
     socket.current.on("matched", (data) => {
       console.log("Matched with peer:", data.peerId);
+      console.log(data);
       setIsMatched(true);
 
       // Call the matched peer
