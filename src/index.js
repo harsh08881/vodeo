@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Video from './component/Video';
+import AuthWrapper from '../src/component/authWrapper'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/video',
-    element: <Video/>,
+    element: <AuthWrapper><Video/></AuthWrapper>,
   },
 ]);
 

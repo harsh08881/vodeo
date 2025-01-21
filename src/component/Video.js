@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
+import URL from "../utils/constant"
 
 const VideoCall = () => {
   const [peerId, setPeerId] = useState(null);
   const [isMatched, setIsMatched] = useState(false);
-  const [waitingCount, setWaitingCount] = useState(null);
-  const [matchDetails, setMatchDetails] = useState(null);
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const socket = useRef(null);
@@ -15,12 +14,7 @@ const VideoCall = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (!token) {
-      console.error("No token found in localStorage");
-      return;
-    }
-
-    socket.current = io("http://localhost:3002", {
+    socket.current = io(URL, {
       auth: {
         token: token,
       },
@@ -30,33 +24,6 @@ const VideoCall = () => {
       console.log("Connected to the server with socket ID:", socket.current.id);
       startLocalStream();
       socket.current.emit("join_queue", socket.current.id);
-    });
-
-    socket.current.on("matchfound", ({ peerId, matchDetails }) => {
-      console.log("Match found with peer:", peerId);
-      setPeerId(peerId);
-      setIsMatched(true);
-      setMatchDetails(matchDetails); // Save match details
-      startWebRTCConnection(peerId);
-    });
-
-    // Listen for incoming ICE candidates
-    socket.current.on("webrtc_ice_candidate", (data) => {
-      if (peerConnection.current) {
-        peerConnection.current.addIceCandidate(new RTCIceCandidate(data.candidate));
-      }
-    });
-
-    // Listen for the remote peer's answer to the offer
-    socket.current.on("webrtc_answer", (data) => {
-      if (peerConnection.current) {
-        peerConnection.current.setRemoteDescription(new RTCSessionDescription(data.answer));
-      }
-    });
-
-    // Listen for the waiting count response from the server
-    socket.current.on("waiting_count", (count) => {
-      setWaitingCount(count);
     });
 
     return () => {
@@ -110,11 +77,7 @@ const VideoCall = () => {
     };
   };
 
-  const getWaitingCount = () => {
-    // Emit event to the server to get the current active waiting count
-    socket.current.emit("get_waiting_count");
-  };
-
+ 
   const triggerMatch = () => {
     // Emit event to trigger match request
     socket.current.emit("match");
@@ -134,36 +97,7 @@ const VideoCall = () => {
         ></video>
       </div>
 
-      {isMatched && (
-        <div>
-          <h2>Remote Video</h2>
-          <video
-            ref={remoteVideoRef}
-            autoPlay
-            style={{ width: "300px", height: "200px", border: "2px solid black" }}
-          ></video>
-          <div>
-            <h3>Match Details:</h3>
-            <pre>{JSON.stringify(matchDetails, null, 2)}</pre>
-          </div>
-        </div>
-      )}
-
-      {!isMatched && <p>Waiting for a match...</p>}
-
-      {/* Button to trigger match event */}
-      <div>
-        <button onClick={triggerMatch}>Trigger Match</button>
       </div>
-
-      {/* Button to fetch waiting users count */}
-      <div>
-        <button onClick={getWaitingCount}>Get Waiting Users Count</button>
-        {waitingCount !== null && (
-          <p>Active Waiting Users: {waitingCount}</p>
-        )}
-      </div>
-    </div>
   );
 };
 
