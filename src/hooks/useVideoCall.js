@@ -34,29 +34,51 @@ const useVideoCall = () => {
       setPeerId(id);
     });
 
-    // Handle local stream setup
-    startLocalStream();
+    // Ensure local stream is ready before setting up handlers
+    (async () => {
+      await startLocalStream();
+
+      // Handle incoming calls
+      if (peer.current) {
+        peer.current.on("call", (call) => {
+          if (localStream.current) {
+            call.answer(localStream.current);
+            call.on("stream", (remoteStream) => {
+              if (remoteVideoRef.current) {
+                remoteVideoRef.current.srcObject = remoteStream;
+              }
+            });
+          } else {
+            console.error("Local stream is not available for answering calls.");
+          }
+        });
+      }
+    })();
 
     // Handle peer matched event
-    socket.current.on("matched", (data) => {
-      console.log("Matched with peer:", data.CommonId);
-      console.log(data);
-      setIsMatched(true);
-      // Call the matched peer
-      startPeerCall(data.CommonIdId);
-    });
+    if (socket.current) {
+      socket.current.on("matched", (data) => {
+        console.log("Matched with peer:", data.CommonId || data.peerId);
+        setIsMatched(true);
 
-    // Handle incoming calls
-    peer.current.on("call", (call) => {
-      call.answer(localStream.current); // Answer with local stream
-      call.on("stream", (remoteStream) => {
-        remoteVideoRef.current.srcObject = remoteStream; // Set remote video stream
+        // Start call with matched peer
+        const remotePeerId = data.CommonId || data.peerId; // Adjust key as needed
+        if (remotePeerId) {
+          startPeerCall(remotePeerId);
+        } else {
+          console.error("No valid peer ID provided for matching.");
+        }
       });
-    });
+    }
 
+    // Cleanup on component unmount
     return () => {
-      socket.current.disconnect();
-      peer.current.destroy();
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+      if (peer.current) {
+        peer.current.destroy();
+      }
       if (localStream.current) {
         localStream.current.getTracks().forEach((track) => track.stop());
       }
@@ -70,19 +92,30 @@ const useVideoCall = () => {
         audio: true,
       });
       localStream.current = stream;
-      localVideoRef.current.srcObject = stream;
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
     } catch (error) {
       console.error("Error accessing media devices:", error);
     }
   };
 
   const startPeerCall = (remotePeerId) => {
-    if (!localStream.current) return;
+    if (!localStream.current) {
+      console.error("Local stream is not available for starting a call.");
+      return;
+    }
 
     const call = peer.current.call(remotePeerId, localStream.current);
-    call.on("stream", (remoteStream) => {
-      remoteVideoRef.current.srcObject = remoteStream;
-    });
+    if (call) {
+      call.on("stream", (remoteStream) => {
+        if (remoteVideoRef.current) {
+          remoteVideoRef.current.srcObject = remoteStream;
+        }
+      });
+    } else {
+      console.error("Failed to initiate a call.");
+    }
   };
 
   return {
