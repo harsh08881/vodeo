@@ -24,8 +24,12 @@ const useVideoCall = () => {
     });
 
     // Initialize Peer instance
-    peer.current = new Peer();
-
+    peer.current = new Peer({
+      host: "openchat-b-production.up.railway.app", // Replace with your PeerJS server host
+      port: 443,                        // Replace with your server port (default: 9000)
+      path: "/peerjs",                   // Replace with your server path (default: /peerjs)
+      secure: true,                      // Use true for HTTPS; false for HTTP
+    });
     // Handle Peer open event to get peer ID
     peer.current.on("open", (id) => {
       console.log("Peer ID:", id);
@@ -48,9 +52,11 @@ const useVideoCall = () => {
 
     // Handle peer matched event
     socket.current.on("matched", (data) => {
-      console.log("Matched with peer:", data.CommonId);
+      console.log("Matched with peer:", data);
+      const { commonId } = data;
+      console.log(commonId)
       setIsMatched(true);
-      setPeerId(data.CommonId); // Set Peer ID for connection
+      setPeerId(commonId); // Set Peer ID for connection
     });
 
     return () => {
