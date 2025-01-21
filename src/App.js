@@ -21,7 +21,7 @@ const App = () => {
       setUser(userData);
 
       // Optionally, persist user data to localStorage
-      localStorage.setItem('token', JSON.stringify(userData));
+      localStorage.setItem('token', userData);
     } catch (error) {
       console.error('Failed to verify token with server:', error.response?.data || error.message);
     }

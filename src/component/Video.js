@@ -1,149 +1,168 @@
-// src/components/VideoCall.js
-
-import React, { useState, useEffect, useRef } from "react";
-import Peer from "peerjs";
-import { io } from "socket.io-client";
+import React, { useEffect, useRef, useState } from "react";
+import io from "socket.io-client";
 
 const VideoCall = () => {
-  const [userId, setUserId] = useState(null);
+  const [peerId, setPeerId] = useState(null);
   const [isMatched, setIsMatched] = useState(false);
-  const [peerIdToMatch, setPeerIdToMatch] = useState(null);
-  const userVideoRef = useRef(null);
-  const peerVideoRef = useRef(null);
-  const [localStream, setLocalStream] = useState(null);
-  const socket = useRef(null); // Socket instance
-  const peer = useRef(null); // PeerJS instance
-  const [connectionStatus, setConnectionStatus] = useState("");
+  const [waitingCount, setWaitingCount] = useState(null);
+  const [matchDetails, setMatchDetails] = useState(null);
+  const localVideoRef = useRef(null);
+  const remoteVideoRef = useRef(null);
+  const socket = useRef(null);
+  const peerConnection = useRef(null);
+  const localStream = useRef(null);
 
-  // Handle media stream
-  const getUserMedia = async () => {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("No token found in localStorage");
+      return;
+    }
+
+    socket.current = io("http://localhost:3002", {
+      auth: {
+        token: token,
+      },
+    });
+
+    socket.current.on("connect", () => {
+      console.log("Connected to the server with socket ID:", socket.current.id);
+      startLocalStream();
+      socket.current.emit("join_queue", socket.current.id);
+    });
+
+    socket.current.on("matchfound", ({ peerId, matchDetails }) => {
+      console.log("Match found with peer:", peerId);
+      setPeerId(peerId);
+      setIsMatched(true);
+      setMatchDetails(matchDetails); // Save match details
+      startWebRTCConnection(peerId);
+    });
+
+    // Listen for incoming ICE candidates
+    socket.current.on("webrtc_ice_candidate", (data) => {
+      if (peerConnection.current) {
+        peerConnection.current.addIceCandidate(new RTCIceCandidate(data.candidate));
+      }
+    });
+
+    // Listen for the remote peer's answer to the offer
+    socket.current.on("webrtc_answer", (data) => {
+      if (peerConnection.current) {
+        peerConnection.current.setRemoteDescription(new RTCSessionDescription(data.answer));
+      }
+    });
+
+    // Listen for the waiting count response from the server
+    socket.current.on("waiting_count", (count) => {
+      setWaitingCount(count);
+    });
+
+    return () => {
+      socket.current.disconnect();
+      if (peerConnection.current) {
+        peerConnection.current.close();
+      }
+    };
+  }, []);
+
+  const startLocalStream = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
       });
-      setLocalStream(stream);
-      userVideoRef.current.srcObject = stream;
-    } catch (err) {
-      console.error("Error accessing media devices", err);
+      localStream.current = stream;
+      localVideoRef.current.srcObject = stream;
+    } catch (error) {
+      console.error("Error accessing media devices:", error);
     }
   };
 
-  // Initialize PeerJS connection
-  const createPeerConnection = () => {
-    peer.current = new Peer({
-      key: "peerjs", // Optional: Replace with your PeerJS credentials if needed
+  const startWebRTCConnection = (peerId) => {
+    peerConnection.current = new RTCPeerConnection();
+
+    localStream.current.getTracks().forEach((track) => {
+      peerConnection.current.addTrack(track, localStream.current);
     });
 
-    peer.current.on("open", (id) => {
-      setUserId(id);
-      console.log("Your peer ID: ", id);
+    peerConnection.current.ontrack = (event) => {
+      remoteVideoRef.current.srcObject = event.streams[0];
+    };
 
-      // Listen for incoming calls
-      peer.current.on("call", (call) => {
-        console.log("Incoming call from ", call.peer);
-        call.answer(localStream); // Answer the call with the local stream
-
-        call.on("stream", (remoteStream) => {
-          peerVideoRef.current.srcObject = remoteStream;
-        });
+    peerConnection.current.createOffer().then((offer) => {
+      return peerConnection.current.setLocalDescription(offer);
+    }).then(() => {
+      socket.current.emit("webrtc_offer", {
+        peerId,
+        offer: peerConnection.current.localDescription,
       });
     });
-  };
 
-  // Start call with the matched user
-  const startCall = (peerId) => {
-    const call = peer.current.call(peerId, localStream);
-
-    call.on("stream", (remoteStream) => {
-      peerVideoRef.current.srcObject = remoteStream;
-    });
-  };
-
-  // Handle match event from the server
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      setConnectionStatus("Unauthorized: Token not found.");
-      return;
-    }
-
-    // Initialize the Socket.IO connection with token in the handshake
-    const socketInstance = io("http://localhost:3002", {
-      auth: {
-        token: token, // Send the token in the handshake
-      },
-    });
-
-    socket.current = socketInstance;
-
-    // Listen for match event
-    socket.current.on("matchFound", (data) => {
-      console.log("Match found with user:", data.peerId);
-      setIsMatched(true);
-      startCall(data.peerId);
-    });
-
-    return () => {
-      socket.current.off("matchFound");
-      socket.current.disconnect();
-    };
-  }, []);
-
-  // Handle button click to trigger match event
-  const handleMatchButtonClick = () => {
-    if (userId) {
-      console.log("Match button clicked, sending match request to server...");
-      socket.current.emit("match", userId); // Emit the match event to server
-    }
-  };
-
-  // Handle video/audio toggling
-  const toggleVideo = () => {
-    const videoTrack = localStream.getVideoTracks()[0];
-    videoTrack.enabled = !videoTrack.enabled;
-  };
-
-  const toggleAudio = () => {
-    const audioTrack = localStream.getAudioTracks()[0];
-    audioTrack.enabled = !audioTrack.enabled;
-  };
-
-  // Connect to socket server and get media on component mount
-  useEffect(() => {
-    getUserMedia();
-    createPeerConnection();
-
-    return () => {
-      // Cleanup
-      if (peer.current) {
-        peer.current.destroy();
+    peerConnection.current.onicecandidate = (event) => {
+      if (event.candidate) {
+        socket.current.emit("webrtc_ice_candidate", {
+          peerId,
+          candidate: event.candidate,
+        });
       }
     };
-  }, []);
+  };
+
+  const getWaitingCount = () => {
+    // Emit event to the server to get the current active waiting count
+    socket.current.emit("get_waiting_count");
+  };
+
+  const triggerMatch = () => {
+    // Emit event to trigger match request
+    socket.current.emit("match");
+  };
 
   return (
     <div>
-      <h2>Video Call</h2>
+      <h1>Video Call</h1>
 
       <div>
-        <video ref={userVideoRef} autoPlay muted></video>
-        <video ref={peerVideoRef} autoPlay></video>
+        <h2>Local Video</h2>
+        <video
+          ref={localVideoRef}
+          autoPlay
+          muted
+          style={{ width: "300px", height: "200px", border: "2px solid black" }}
+        ></video>
       </div>
 
+      {isMatched && (
+        <div>
+          <h2>Remote Video</h2>
+          <video
+            ref={remoteVideoRef}
+            autoPlay
+            style={{ width: "300px", height: "200px", border: "2px solid black" }}
+          ></video>
+          <div>
+            <h3>Match Details:</h3>
+            <pre>{JSON.stringify(matchDetails, null, 2)}</pre>
+          </div>
+        </div>
+      )}
+
+      {!isMatched && <p>Waiting for a match...</p>}
+
+      {/* Button to trigger match event */}
       <div>
-        <button onClick={toggleVideo}>
-          {localStream && localStream.getVideoTracks()[0].enabled ? "Turn Off Video" : "Turn On Video"}
-        </button>
-        <button onClick={toggleAudio}>
-          {localStream && localStream.getAudioTracks()[0].enabled ? "Mute Audio" : "Unmute Audio"}
-        </button>
+        <button onClick={triggerMatch}>Trigger Match</button>
       </div>
 
-      <button onClick={handleMatchButtonClick}>Match</button> {/* Match Button */}
-      {isMatched && <p>You are matched with another user!</p>}
-      {connectionStatus && <p>{connectionStatus}</p>} {/* Show connection status */}
+      {/* Button to fetch waiting users count */}
+      <div>
+        <button onClick={getWaitingCount}>Get Waiting Users Count</button>
+        {waitingCount !== null && (
+          <p>Active Waiting Users: {waitingCount}</p>
+        )}
+      </div>
     </div>
   );
 };
