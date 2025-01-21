@@ -11,6 +11,7 @@ const useVideoCall = () => {
   const socket = useRef(null);
   const peer = useRef(null);
   const localStream = useRef(null);
+  const callRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,68 +23,67 @@ const useVideoCall = () => {
       },
     });
 
-    // Initialize PeerJS client
-    peer.current = new Peer(null, {
-      host: "openchat-b-production.up.railway.app",
-      path: "/peerjs",
-      secure: true,
-    });
+    // Initialize Peer instance
+    peer.current = new Peer();
 
+    // Handle Peer open event to get peer ID
     peer.current.on("open", (id) => {
-      console.log("PeerJS ID:", id);
-      setPeerId(id);
+      console.log("Peer ID:", id);
     });
 
-    // Ensure local stream is ready before setting up handlers
-    (async () => {
-      await startLocalStream();
-
-      // Handle incoming calls
-      if (peer.current) {
-        peer.current.on("call", (call) => {
-          if (localStream.current) {
-            call.answer(localStream.current);
-            call.on("stream", (remoteStream) => {
-              if (remoteVideoRef.current) {
-                remoteVideoRef.current.srcObject = remoteStream;
-              }
-            });
-          } else {
-            console.error("Local stream is not available for answering calls.");
-          }
+    // Handle incoming calls
+    peer.current.on("call", (call) => {
+      console.log("Receiving a call...");
+      if (localStream.current) {
+        call.answer(localStream.current); // Answer the call with the local stream
+        call.on("stream", (remoteStream) => {
+          console.log("Receiving remote stream");
+          remoteVideoRef.current.srcObject = remoteStream; // Set remote video stream
         });
       }
-    })();
+    });
+
+    // Handle local stream setup
+    startLocalStream();
 
     // Handle peer matched event
-    if (socket.current) {
-      socket.current.on("matched", (data) => {
-        console.log("Matched with peer:", data.CommonId || data.peerId);
-        setIsMatched(true);
+    socket.current.on("matched", (data) => {
+      console.log("Matched with peer:", data.CommonId);
+      setIsMatched(true);
+      setPeerId(data.CommonId); // Set Peer ID for connection
+    });
 
-        // Start call with matched peer
-        const remotePeerId = data.CommonId || data.peerId; // Adjust key as needed
-        if (remotePeerId) {
-          startPeerCall(remotePeerId);
-        } else {
-          console.error("No valid peer ID provided for matching.");
-        }
-      });
-    }
-
-    // Cleanup on component unmount
     return () => {
-      if (socket.current) {
-        socket.current.disconnect();
+      socket.current.disconnect();
+      if (localStream.current) {
+        localStream.current.getTracks().forEach((track) => track.stop());
       }
       if (peer.current) {
         peer.current.destroy();
       }
-      if (localStream.current) {
-        localStream.current.getTracks().forEach((track) => track.stop());
-      }
     };
   }, []);
+
+  useEffect(() => {
+    // Establish a Peer connection when peerId is set
+    if (peerId && peer.current) {
+      console.log("Attempting to call peer:", peerId);
+      callRef.current = peer.current.call(peerId, localStream.current); // Initiate a call to the peer
+      callRef.current.on("stream", (remoteStream) => {
+        console.log("Connected to remote stream");
+        remoteVideoRef.current.srcObject = remoteStream; // Set remote video stream
+      });
+
+      callRef.current.on("close", () => {
+        console.log("Call ended");
+        remoteVideoRef.current.srcObject = null;
+      });
+
+      callRef.current.on("error", (error) => {
+        console.error("Call error:", error);
+      });
+    }
+  }, [peerId]);
 
   const startLocalStream = async () => {
     try {
@@ -92,29 +92,9 @@ const useVideoCall = () => {
         audio: true,
       });
       localStream.current = stream;
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-      }
+      localVideoRef.current.srcObject = stream;
     } catch (error) {
       console.error("Error accessing media devices:", error);
-    }
-  };
-
-  const startPeerCall = (remotePeerId) => {
-    if (!localStream.current) {
-      console.error("Local stream is not available for starting a call.");
-      return;
-    }
-
-    const call = peer.current.call(remotePeerId, localStream.current);
-    if (call) {
-      call.on("stream", (remoteStream) => {
-        if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = remoteStream;
-        }
-      });
-    } else {
-      console.error("Failed to initiate a call.");
     }
   };
 
@@ -125,7 +105,6 @@ const useVideoCall = () => {
     remoteVideoRef,
     socket,
     peer,
-    startPeerCall,
     startLocalStream,
   };
 };
