@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import GoogleLoginComponent from './component/Google'; // Your custom Google login component
 import axios from 'axios';
+import URL from './utils/constant';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -10,7 +11,7 @@ const App = () => {
 
     try {
       // Post the token to your backend server
-      const response = await axios.post('http://localhost:3002/google', { token: credential });
+      const response = await axios.post(`${URL}/google`, { token: credential });
 
       // Extract user data from server response
       const userData = response.data.token;
