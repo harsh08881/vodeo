@@ -16,56 +16,55 @@ const useVideoCall = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    // Initialize Socket.io connection
-    socket.current = io(URL, {
-      auth: {
-        token: token,
-      },
-    });
+    // Initialize Socket.io connection and Peer instance
+    const initializePeerAndSocket = async () => {
+      // Initialize Socket.io
+      socket.current = io(URL, {
+        auth: { token: token },
+      });
 
-    // Initialize Peer instance
-    peer.current = new Peer({
-      host: "openchat-b-production.up.railway.app", // Replace with your PeerJS server host
-      port: 443,                        // Replace with your server port (default: 9000)
-      path: "/peerjs",                   // Replace with your server path (default: /peerjs)
-      secure: true,                      // Use true for HTTPS; false for HTTP
-    });
-    // Handle Peer open event to get peer ID
-    peer.current.on("open", (id) => {
-      console.log("Peer ID:", id);
-    });
+      // Initialize Peer instance
+      peer.current = new Peer({
+        host: "openchat-b-production.up.railway.app",  // Replace with your peer server host
+        port: 443,                        // Replace with correct port
+        path: "/peerjs",
+        secure: true,                      // Set to true if you're using HTTPS
+      });
 
-    // Handle incoming calls
-    peer.current.on("call", (call) => {
-      console.log("Receiving a call...");
-      if (localStream.current) {
-        call.answer(localStream.current); // Answer the call with the local stream
-        call.on("stream", (remoteStream) => {
-          console.log("Receiving remote stream");
-          remoteVideoRef.current.srcObject = remoteStream; // Set remote video stream
-        });
-      }
-    });
+      // Handle Peer open event to get peer ID
+      peer.current.on("open", (id) => {
+        console.log("Peer ID:", id);
+      });
 
-    // Handle local stream setup
-    startLocalStream();
+      // Handle incoming calls
+      peer.current.on("call", (call) => {
+        console.log("Receiving a call...");
+        if (localStream.current) {
+          call.answer(localStream.current); // Answer the call with the local stream
+          call.on("stream", (remoteStream) => {
+            console.log("Receiving remote stream");
+            remoteVideoRef.current.srcObject = remoteStream; // Set remote video stream
+          });
+        }
+      });
 
-    // Handle peer matched event
-    socket.current.on("matched", (data) => {
-      console.log("Matched with peer:", data);
-      const { commonId } = data;
-      console.log(commonId)
-      setIsMatched(true);
-      setPeerId(commonId); // Set Peer ID for connection
-    });
+      // Handle peer matched event from the server
+      socket.current.on("matched", (data) => {
+        console.log("Matched with peer:", data);
+        const { commonId } = data;
+        setIsMatched(true);
+        setPeerId(commonId); // Set Peer ID for connection
+      });
+    };
 
+    initializePeerAndSocket();
+
+    // Cleanup function to disconnect socket and peer when component unmounts
     return () => {
-      socket.current.disconnect();
+      if (socket.current) socket.current.disconnect();
+      if (peer.current) peer.current.destroy();
       if (localStream.current) {
         localStream.current.getTracks().forEach((track) => track.stop());
-      }
-      if (peer.current) {
-        peer.current.destroy();
       }
     };
   }, []);
@@ -103,6 +102,11 @@ const useVideoCall = () => {
       console.error("Error accessing media devices:", error);
     }
   };
+
+  // Start local stream when component mounts
+  useEffect(() => {
+    startLocalStream();
+  }, []);
 
   return {
     peerId,
