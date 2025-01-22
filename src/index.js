@@ -5,6 +5,7 @@ import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Video from './component/Video';
 import AuthWrapper from '../src/component/authWrapper'
+import Videos from './component/Vodeo';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/video',
     element: <AuthWrapper><Video/></AuthWrapper>,
+  },
+  {
+    path: '/vid',
+    element: <AuthWrapper><Videos/></AuthWrapper>,
   },
 ]);
 
