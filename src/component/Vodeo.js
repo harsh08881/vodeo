@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Peer from "peerjs";
 import io from "socket.io-client";
 import URL from "../utils/constant";
+import "./Video.css";
 
 const Videos = () => {
   const [peerId, setPeerId] = useState(null);
@@ -120,17 +121,15 @@ const Videos = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Video Chat</h1>
 
-      {/* Match button */}
       <button onClick={handleMatch} disabled={loading}>
         {loading ? "Finding Match..." : "Find Match"}
       </button>
 
-      {/* Display remote stream if connected */}
-      <div>
-        {remoteStream && (
+      <div className="video-container">
+        <div className="remote-video">
           <video
             ref={(videoElement) => {
               if (videoElement) {
@@ -141,16 +140,19 @@ const Videos = () => {
             autoPlay
             controls
           />
-        )}
-      </div>
-      <video ref={localVideoRef} autoPlay controls />
+          <label>Remote Video</label>
+        </div>
 
-      {/* Display local Peer ID */}
+        <div className="local-video">
+          <video ref={localVideoRef} autoPlay controls />
+          <label>Local Video</label>
+        </div>
+      </div>
+
       {peerId && <p>Your Peer ID: {peerId}</p>}
 
-      {/* Display match details */}
       {matchDetails && (
-        <div>
+        <div className="match-details">
           <h3>Matched With: {matchDetails.matchedWith}</h3>
           <p>Common ID: {matchDetails.commonId}</p>
           <p>Initiator: {matchDetails.isInitiator ? "Yes" : "No"}</p>

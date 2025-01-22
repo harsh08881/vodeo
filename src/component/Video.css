@@ -1,0 +1,97 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #4caf50;
+    margin-top: 20px;
+  }
+  
+  /* Container Styling */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  button:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #388e3c;
+  }
+  
+  /* Video Elements */
+  video {
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    margin: 10px 0;
+    max-width: 100%;
+    width: 500px;
+    height: auto;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Match Details Styling */
+  .match-details {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .match-details h3 {
+    color: #4caf50;
+    margin: 0 0 10px;
+  }
+  
+  /* Flex Layout for Videos */
+  .video-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .local-video, .remote-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .local-video video, .remote-video video {
+    max-width: 300px;
+  }
+  
+  .local-video label, .remote-video label {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
