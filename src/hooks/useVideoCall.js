@@ -5,13 +5,13 @@ import io from "socket.io-client";
 const usePeerConnection = () => {
   const [peerId, setPeerId] = useState(null);
   const [remoteStream, setRemoteStream] = useState(null);
-  const [matchDetails, setMatchDetails] = useState(null);  // Store match details
+  const [matchDetails, setMatchDetails] = useState(null); // Store match details
   const peer = useRef(null);
   const socket = useRef(null);
 
   useEffect(() => {
     // Retrieve token from localStorage or other secure places
-    const token = localStorage.getItem("token");  // Replace with actual token retrieval
+    const token = localStorage.getItem("token"); // Replace with actual token retrieval
 
     // Initialize PeerJS
     peer.current = new Peer({
@@ -35,7 +35,13 @@ const usePeerConnection = () => {
     // Listen for 'matched' event
     socket.current.on("matched", (data) => {
       console.log("Matched event received:", data);
-      setMatchDetails(data);  // Store match details in state
+      setMatchDetails(data); // Store match details in state
+
+      // If the user is the initiator, start a peer call
+      if (data.isInitiator) {
+        callPeer(data.matchedWith); // Initiate call to matched peer
+      }
+      // If the user is not the initiator, they wait for an incoming call (handled by PeerJS 'call' event)
     });
 
     // Handle Peer connection open event

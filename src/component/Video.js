@@ -1,27 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import usePeerConnection from "../hooks/useVideoCall";
 
 const VideoChat = () => {
-  const { peerId, callPeer, remoteStream, handleMatch } = usePeerConnection();
+  const { peerId, callPeer, remoteStream, handleMatch, matchDetails } = usePeerConnection();
+
+  useEffect(() => {
+    if (matchDetails) {
+      console.log("Matched with:", matchDetails);
+    }
+  }, [matchDetails]);
 
   return (
     <div>
       <h1>Video Chat</h1>
-      <div>
-        <p>Your Peer ID: {peerId}</p>
-        <button onClick={handleMatch}>Match</button> {/* Button to trigger match */}
-      </div>
+      <button onClick={handleMatch}>Find Match</button>
       <div>
         {remoteStream && (
           <video
-            ref={(ref) => {
-              if (ref) ref.srcObject = remoteStream;
+            ref={(videoElement) => {
+              if (videoElement) {
+                videoElement.srcObject = remoteStream;
+                videoElement.play();
+              }
             }}
             autoPlay
-            playsInline
           />
         )}
       </div>
+      {peerId && <p>Your Peer ID: {peerId}</p>}
     </div>
   );
 };
