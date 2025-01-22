@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import GoogleLoginComponent from './component/Google'; // Your custom Google login component
 import axios from 'axios';
 import URL from './utils/constant';
+import Header from './component/Header/Header';
+import Footer from './component/Footer/Footer';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -40,6 +42,7 @@ const App = () => {
 
   return (
     <div>
+      <Header/>
       {!user ? (
         <div style={{width: '100px'}}>
         <GoogleLoginComponent
@@ -55,6 +58,7 @@ const App = () => {
           <button onClick={handleLogout}>Logout</button>
         </div>
       )}
+      <Footer/>
     </div>
   );
 };
