@@ -3,13 +3,16 @@ import Peer from "peerjs";
 import io from "socket.io-client";
 import URL from "../utils/constant";
 
-const Videos = () => {
+const VideoChat = () => {
   const [peerId, setPeerId] = useState(null);
   const [remoteStream, setRemoteStream] = useState(null);
   const [inputPeerId, setInputPeerId] = useState(""); // State to store the peerId entered by the user
   const [matchDetails, setMatchDetails] = useState(null); // Store match details
+  const [loadingRemoteVideo, setLoadingRemoteVideo] = useState(true); // To control the loading state for remote video
   const peer = useRef(null);
   const socket = useRef(null);
+  const localVideoRef = useRef(null); // Reference for local video
+  const remoteVideoRef = useRef(null); // Reference for remote video
 
   useEffect(() => {
     // Retrieve token from localStorage or other secure places
@@ -57,6 +60,7 @@ const Videos = () => {
           call.on("stream", (remoteStream) => {
             console.log("Received remote stream");
             setRemoteStream(remoteStream); // Store the remote stream
+            setLoadingRemoteVideo(false);  // Remote video is ready, set loading to false
           });
         })
         .catch((err) => {
@@ -82,10 +86,17 @@ const Videos = () => {
         video: true,
         audio: true,
       });
+
+      // Set the local stream to the local video reference
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = localStream;
+      }
+
       const call = peer.current.call(remotePeerId, localStream);
       call.on("stream", (remoteStream) => {
         console.log("Connected to remote peer's stream");
         setRemoteStream(remoteStream); // Store the remote stream
+        setLoadingRemoteVideo(false);  // Remote video is ready, set loading to false
       });
     } catch (err) {
       console.error("Failed to initiate call:", err);
@@ -113,6 +124,7 @@ const Videos = () => {
   return (
     <div>
       <h1>Video Chat</h1>
+      
       {/* Match button */}
       <button onClick={handleMatch}>Find Match</button>
 
@@ -127,20 +139,31 @@ const Videos = () => {
         <button onClick={handleConnect}>Connect</button>
       </div>
 
-      {/* Display remote stream if connected */}
-      <div>
-        {remoteStream && (
+      <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+        {/* Local Video */}
+        <div>
+          <h3>Your Video</h3>
           <video
-            ref={(videoElement) => {
-              if (videoElement) {
-                videoElement.srcObject = remoteStream;
-                videoElement.play();
-              }
-            }}
+            ref={localVideoRef}
             autoPlay
-            controls
+            muted
+            style={{ width: "300px", height: "200px", border: "1px solid black" }}
           />
-        )}
+        </div>
+
+        {/* Remote Video */}
+        <div>
+          <h3>Remote Video</h3>
+          {loadingRemoteVideo ? (
+            <div>Loading remote video...</div> // Display loading message if remote video is not available
+          ) : (
+            <video
+              ref={remoteVideoRef}
+              autoPlay
+              style={{ width: "300px", height: "200px", border: "1px solid black" }}
+            />
+          )}
+        </div>
       </div>
 
       {/* Display local Peer ID */}
@@ -155,8 +178,7 @@ const Videos = () => {
         </div>
       )}
     </div>
-
   );
 };
 
-export default Videos;
+export default VideoChat;
