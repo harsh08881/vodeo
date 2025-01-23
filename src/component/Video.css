@@ -47,8 +47,8 @@ body {
     border: 2px solid #4caf50;
     border-radius: 10px;
     margin: 10px 0;
-    max-width: 100%;
-    width: 500px;
+    width: 400px;
+    height: 400px;
     height: auto;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
@@ -87,11 +87,19 @@ body {
   }
   
   .local-video video, .remote-video video {
-    max-width: 300px;
+    min-width: 300px;
+    max-height: 300px;
   }
   
   .local-video label, .remote-video label {
     margin-top: 10px;
     font-weight: bold;
   }
+
+  video {
+    width: 600px;
+    height: 600px;
+  }
+
+
   
