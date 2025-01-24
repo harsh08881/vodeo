@@ -1,11 +1,13 @@
-import React from 'react';
+import React , { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Video from './component/Video';
 import AuthWrapper from '../src/component/authWrapper'
-import Videos from './component/Vodeo';
+import DelayedLazyLoader from './component/DelayedLazy';
+
+const Videos = React.lazy(() => import('./component/Vodeo'));
 const router = createBrowserRouter([
   {
     path: '/',
@@ -17,7 +19,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/vid',
-    element: <AuthWrapper><Videos/></AuthWrapper>,
+    element:  (<DelayedLazyLoader delay={2000}>
+      <AuthWrapper><Videos/></AuthWrapper>
+    </DelayedLazyLoader>
+        
+    )
+   ,
   },
 ]);
 
