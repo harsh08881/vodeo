@@ -84,12 +84,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
   }
   
-  .local-video video, .remote-video video {
+  /* .local-video video, .remote-video video {
     min-width: 300px;
     max-height: 300px;
-  }
+  } */
   
   .local-video label, .remote-video label {
     margin-top: 10px;
@@ -97,8 +98,8 @@ body {
   }
 
   video {
-    width: 600px;
-    height: 600px;
+    width: 700px;
+    height: 525px;
   }
 
 
