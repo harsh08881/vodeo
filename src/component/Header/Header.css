@@ -1,59 +1,121 @@
+/* Header.css */
+
 .header {
-    background-color: #282c34;
-    color: white;
-    padding: 10px 0;
-    font-family: Arial, sans-serif;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-  
+  background-color: #1e293b; /* Dark blue-gray background */
+  color: #fff; /* White text */
+  padding: 15px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-logo {
+  flex: 1;
+}
+
+.header-logo-img {
+  width: 120px;
+  max-width: 100%;
+  height: auto;
+}
+
+.header-nav {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #e2e8f0; /* Light gray text */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #38bdf8; /* Sky blue on hover */
+}
+
+.header-actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.login-btn,
+.signup-btn {
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn {
+  background-color: #64748b; /* Slate gray background */
+  color: #fff;
+}
+
+.login-btn:hover {
+  background-color: #475569; /* Darker slate gray */
+  transform: scale(1.05);
+}
+
+.signup-btn {
+  background-color: #38bdf8; /* Sky blue background */
+  color: #1e293b; /* Dark text for contrast */
+}
+
+.signup-btn:hover {
+  background-color: #0ea5e9; /* Deeper sky blue */
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .header-container {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    text-align: center;
   }
-  
-  .header-logo-img {
-    width: 50px;
-    height: auto;
-  }
-  
+
   .header-nav {
-    display: flex;
-    gap: 30px;
-  }
-  
-  .nav-link {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s;
-  }
-  
-  .nav-link:hover {
-    color: #61dafb;
-  }
-  
-  .header-actions {
-    display: flex;
+    flex-wrap: wrap;
     gap: 15px;
+    margin-top: 10px;
   }
-  
-  .login-btn, .signup-btn {
-    padding: 10px 20px;
-    border: none;
-    background-color: #61dafb;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+
+  .header-actions {
+    margin-top: 10px;
   }
-  
-  .login-btn:hover, .signup-btn:hover {
-    background-color: #21a1f1;
+}
+
+@media (max-width: 480px) {
+  .header-logo-img {
+    width: 100px;
   }
-  
+
+  .nav-link {
+    font-size: 14px;
+  }
+
+  .login-btn,
+  .signup-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}

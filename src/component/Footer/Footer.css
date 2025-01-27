@@ -1,59 +1,112 @@
+/* Footer.css */
+
 .footer {
-    background-color: #282c34;
-    color: white;
-    padding: 20px 0;
-    font-family: Arial, sans-serif;
-  }
-  
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  position: relative;
+  bottom: 0;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.footer-logo {
+  flex: 1;
+  text-align: left;
+}
+
+.footer-logo-img {
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+}
+
+.footer-links {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #1e90ff;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icon {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #1e90ff;
+}
+
+.footer-text {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .footer-container {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
   }
-  
-  .footer-logo-img {
-    width: 50px;
-  }
-  
-  .footer-links {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .footer-link {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
-  }
-  
-  .footer-link:hover {
-    color: #61dafb;
-  }
-  
-  .footer-socials {
-    margin-top: 20px;
-    display: flex;
-    gap: 15px;
-  }
-  
-  .social-icon {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
-  }
-  
-  .social-icon:hover {
-    color: #61dafb;
-  }
-  
-  .footer-text {
+
+  .footer-logo {
     text-align: center;
-    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-socials {
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-link,
+  .social-icon {
     font-size: 14px;
   }
-  
+
+  .footer-logo-img {
+    width: 120px;
+  }
+
+  .footer-text {
+    font-size: 10px;
+  }
+}
