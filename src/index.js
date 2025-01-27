@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Video from './component/Video';
 import AuthWrapper from '../src/component/authWrapper'
 import DelayedLazyLoader from './component/DelayedLazy';
+import AnimationComponent from './component/animation';
 
 const Videos = React.lazy(() => import('./component/Vodeo'));
 const router = createBrowserRouter([
@@ -22,9 +23,12 @@ const router = createBrowserRouter([
     element:  (<DelayedLazyLoader delay={2000}>
       <AuthWrapper><Videos/></AuthWrapper>
     </DelayedLazyLoader>
-        
-    )
+        )
    ,
+  },
+  {
+    path: '/vi',
+    element: <AnimationComponent/>,
   },
 ]);
 

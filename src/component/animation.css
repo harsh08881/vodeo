@@ -1,0 +1,48 @@
+:root {
+  --dark-green: #005f00;
+  --white-text: #fff;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.main {
+  width: 800px;
+  margin: auto;
+}
+
+.container {
+  border: 1px solid rgba(215, 215, 215, 1);
+  border-radius: 8px;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  flex: wrap;
+}
+
+.bus-details {
+  flex: 0 0 25%;
+  padding: 10px;
+}
+
+.flex {
+  display: flex;
+}
+
+img {
+  width: 24px;
+}
+
+.sa {
+  display: flex;
+  background-color: #e1ebfb;
+  color: #2d6abd;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 4px 8px;
+  align-items: center;
+}
