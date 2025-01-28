@@ -17,7 +17,7 @@ body {
   .container {
     display: flex;
     width: auto;
-    height: auto;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     padding: 20px;
@@ -48,16 +48,13 @@ body {
   video {
     border: 2px solid #4caf50;
     border-radius: 10px;
-    margin: 10px 0;
     object-fit: cover;
-
-    max-width: 600px;
-    min-width: 450px;
+   min-width: 320px;
     width: 100%;
      /* Full width of the viewport */
     height: 400px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    padding: 6px;
   }
   
   /* Match Details Styling */
@@ -71,6 +68,7 @@ body {
     width: 90%;
     max-width: 400px;
     text-align: center;
+    padding: 10px;
   }
   
   .match-details h3 {
@@ -92,6 +90,7 @@ body {
     flex-direction: column;
     align-items: center;
     flex: 1;
+    margin: 15px;
   }
   
   /* .local-video video, .remote-video video {
