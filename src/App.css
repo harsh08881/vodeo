@@ -5,33 +5,25 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f8f9fa; /* Light gray background */
   color: #333; /* Dark gray text */
+  box-sizing: border-box;
 }
 
 .app-container {
-  max-width: 1200px;
-  min-height: 70vh;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  padding: 10px;
 }
 
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 40px;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
+  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-  width: 80%;
-  height: 50vh;
+  width: 100%;
 }
 
 .profile-container {
@@ -39,14 +31,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
   width: 80%;
-  height: 80%;
 }
 
 h2 {
@@ -70,16 +60,19 @@ button {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+
 button:hover {
   background-color: #0ea5e9; /* Deeper sky blue */
   transform: scale(1.05);
 }
 
+
 .logout-button {
   margin-top: 20px;
 }
 
-@media (max-width: 768px) {
+
+/* @media (max-width: 768px) {
   .login-container,
   .profile-container {
     width: 90%;
@@ -96,7 +89,7 @@ button:hover {
 @media (max-width: 480px) {
   .login-container,
   .profile-container {
-    width: 95%;
+    width: 90%;
     padding: 20px;
   }
 
@@ -113,4 +106,4 @@ button:hover {
     padding: 8px;
     font-size: 14px;
   }
-}
+} */
