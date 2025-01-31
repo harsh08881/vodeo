@@ -1,6 +1,7 @@
 /* Header.css */
 
 .header {
+  min-width: 320px;
   background-color: #1e293b; /* Dark blue-gray background */
   color: #fff; /* White text */
   padding: 15px 20px;

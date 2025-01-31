@@ -9,8 +9,10 @@ body {
 }
 
 .app-container {
+  min-width: 340px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   padding: 10px;
 }
 
@@ -23,7 +25,7 @@ body {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: 80%;
 }
 
 .profile-container {
@@ -35,18 +37,13 @@ body {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-  width: 80%;
+  
 }
 
 h2 {
   color: #1e293b; /* Dark blue-gray */
-  margin-bottom: 20px;
 }
 
-img {
-  margin: 20px 0;
-}
 
 button {
   padding: 10px 20px;
@@ -71,39 +68,16 @@ button:hover {
   margin-top: 20px;
 }
 
-
-/* @media (max-width: 768px) {
-  .login-container,
-  .profile-container {
-    width: 90%;
-    padding: 30px;
-  }
-
-  button {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-  }
+h2{
+  text-align: center;
 }
 
-@media (max-width: 480px) {
-  .login-container,
-  .profile-container {
-    width: 90%;
-    padding: 20px;
+
+@media (max-width: 320px) {
+  .login-container{
+    width: 100%;
+    padding: 10px;
   }
 
-  h2 {
-    font-size: 18px;
-  }
 
-  img {
-    width: 40px;
-    height: 40px;
-  }
-
-  button {
-    padding: 8px;
-    font-size: 14px;
-  }
-} */
+}

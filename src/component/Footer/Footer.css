@@ -1,6 +1,8 @@
 /* Footer.css */
 
+
 .footer {
+  min-width: 320px;
   background-color: #222;
   color: #fff;
   padding: 20px;
