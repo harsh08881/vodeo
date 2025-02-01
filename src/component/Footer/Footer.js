@@ -1,12 +1,13 @@
 import React from 'react';
 import './Footer.css';
+import logo from '../../assets/logo.png'
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-logo">
-          <img src="your-logo.png" alt="App Logo" className="footer-logo-img" />
+          <img src={logo} alt="App Logo" className="footer-logo-img" />
         </div>
         <div className="footer-links">
           <a href="/privacy-policy" className="footer-link">Privacy Policy</a>
