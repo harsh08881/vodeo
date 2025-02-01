@@ -104,10 +104,6 @@
     margin-top: 10px;
     display: none;
   }
-
-  .header-actions {
-    margin-top: 10px;
-  }
 }
 
 @media (max-width: 480px) {
