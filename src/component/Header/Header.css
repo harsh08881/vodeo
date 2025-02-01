@@ -1,16 +1,22 @@
 /* Header.css */
 
+:root{
+  --font-size: 24px;
+}
+
 .header {
   min-width: 320px;
-  background-color: #1e293b; /* Dark blue-gray background */
-  color: #fff; /* White text */
+  background-color: #F5F5F5; /* White background */
+  color: #040404; /* Black text */
   padding: 15px 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  font-family: 'Work Sans', sans-serif; /* Updated font */
   position: sticky;
   top: 0;
   z-index: 1000;
 }
+
+
 
 .header-container {
   display: flex;
@@ -25,7 +31,7 @@
 }
 
 .header-logo-img {
-  width: 120px;
+  width: 60px;
   max-width: 100%;
   height: auto;
 }
@@ -38,10 +44,12 @@
 }
 
 .nav-link {
-  color: #e2e8f0; /* Light gray text */
+  color: #000000; /* Light gray text */
   text-decoration: none;
-  font-size: 16px;
+  font-size: 24px;
   transition: color 0.3s ease;
+  font-weight: 800;
+  
 }
 
 .nav-link:hover {
@@ -57,8 +65,8 @@
 
 .login-btn,
 .signup-btn {
-  padding: 8px 15px;
-  font-size: 14px;
+  padding: 10px 10px;
+  font-size: var(--font-size);
   font-weight: bold;
   border: none;
   border-radius: 20px;
@@ -87,17 +95,14 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+@media (max-width: 865px) {
+  
 
   .header-nav {
     flex-wrap: wrap;
     gap: 15px;
     margin-top: 10px;
+    display: none;
   }
 
   .header-actions {
@@ -111,12 +116,12 @@
   }
 
   .nav-link {
-    font-size: 14px;
+    font-size: 20px;
   }
 
   .login-btn,
   .signup-btn {
-    font-size: 12px;
+    font-size: 18px;
     padding: 6px 12px;
   }
 }

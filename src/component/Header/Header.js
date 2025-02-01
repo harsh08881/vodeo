@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './Header.css';
+import logo from '../../assets/logo.png'
 
 const Header = () => {
   return (
     <header className="header">
       <div className="header-container">
         <div className="header-logo">
-          <img src="your-logo.png" alt="App Logo" className="header-logo-img" />
+          <img src={logo} alt="App Logo" className="header-logo-img" />
         </div>
         <nav className="header-nav">
           <Link to="/" className="nav-link">Home</Link>
