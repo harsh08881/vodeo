@@ -1,5 +1,5 @@
 import React from 'react';
-import photo from '../assets/loads.webp';
+import photo from '../assets/loads.png';
 
 const LazyLoadSpinner = () => {
   return (
@@ -57,11 +57,10 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '20px',
-    width: '200px',
-    height: '200px',
-    borderRadius: '50%',
+    width: '400px',
+    height: 'auto',
     overflow: 'hidden',
-    border: '4px solid #32cd32',
+    borderRadius:'90%',
     animation: 'pulse 2s infinite ease-in-out',
   },
   image: {
