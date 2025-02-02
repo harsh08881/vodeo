@@ -157,7 +157,7 @@ body{
     top: 67px;
     align-items: center;
     background-color: #F5F5F5;
-    height: auto;
+    height: 100vh;
     visibility: hidden; /* Initially hidden */
     opacity: 0; /* Make it invisible */
     transition: visibility 0.3s, opacity 0.3s ease-in-out;
