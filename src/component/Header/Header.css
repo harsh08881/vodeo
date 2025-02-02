@@ -27,13 +27,20 @@
 }
 
 .header-logo {
+  display: flex;
+  align-items: center;
   flex: 1;
 }
 
 .header-logo-img {
-  width: 60px;
+  width: 70px;
   max-width: 100%;
   height: auto;
+}
+.header-logo span{
+   font-size: 24px;
+   font-weight: 600;
+   color: #6A9CFB;
 }
 
 .header-nav {
@@ -108,16 +115,19 @@
 
 @media (max-width: 480px) {
   .header-logo-img {
-    width: 100px;
+    width: 70px;
   }
 
   .nav-link {
     font-size: 20px;
   }
 
-  .login-btn,
-  .signup-btn {
-    font-size: 18px;
+  .login-btn
+  {
+    font-size: 24px;
     padding: 6px 12px;
+  }
+  .signup-btn {
+     display: none;
   }
 }
