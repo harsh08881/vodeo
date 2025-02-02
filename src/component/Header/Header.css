@@ -1,14 +1,23 @@
 /* Header.css */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root{
   --font-size: 24px;
 }
+body{
+  position: relative;
+}
 
 .header {
-  min-width: 320px;
+  min-width: 280px;
+  width: 100%;
   background-color: #F5F5F5; /* White background */
   color: #5b4747; /* Black text */
-  padding: 15px 20px;
+  padding: 5px 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: 'Work Sans', sans-serif; /* Updated font */
   position: sticky;
@@ -20,6 +29,7 @@
 
 .header-container {
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
@@ -70,6 +80,13 @@
   gap: 10px;
 }
 
+.material-symbols-outlined {
+  font-size: 44px;
+}
+.header-actions span{
+  display: none;
+}
+
 .login-btn,
 .signup-btn {
   padding: 7px 14px;
@@ -101,15 +118,16 @@
   transform: scale(1.05);
 }
 
+
 /* Responsive Design */
 @media (max-width: 865px) {
   
 
   .header-nav {
     flex-wrap: wrap;
-    gap: 15px;
+    /* gap: 15px; */
     margin-top: 10px;
-    display: none;
+    /* display: none; */
   }
 }
 
@@ -118,9 +136,6 @@
     width: 70px;
   }
 
-  .nav-link {
-    font-size: 20px;
-  }
 
   .login-btn
   {
@@ -130,4 +145,41 @@
   .signup-btn {
      display: none;
   }
+}
+
+@media (max-width:480px) {
+  .header-nav{
+    position: absolute;
+    flex-direction: column;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    top: 67px;
+    align-items: center;
+    background-color: #F5F5F5;
+    height: auto;
+    visibility: hidden; /* Initially hidden */
+    opacity: 0; /* Make it invisible */
+    transition: visibility 0.3s, opacity 0.3s ease-in-out;
+  }
+
+  .nav-link{
+    font-size: 40px;
+    line-height: 2;
+  }
+  .header-logo span{
+    display: none;
+  }
+  
+
+  .header-actions span{
+    display: block;
+  }
+  .show{
+    visibility: visible; /* When shown */
+    opacity: 1; /* Make it visible */
+   
+  }
+
+
 }
