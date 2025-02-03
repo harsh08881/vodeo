@@ -6,6 +6,7 @@ import Header from './component/Header/Header';
 import Footer from './component/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './App.css'; // Import the CSS file
+import LoadingProgressBar from './component/progressbar';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -45,6 +46,7 @@ const App = () => {
 
   return (
     <div>
+      <LoadingProgressBar/>
       <Header />
       <div className="app-container">
         {!user ? (
