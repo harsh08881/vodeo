@@ -1,0 +1,50 @@
+
+
+
+.not-found-container{
+    padding: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.not-found-image{
+    padding: 2;
+    width: 100%;
+    height: auto;
+}
+
+.not-found-text{
+    font-size: var(--font-size-xlarge);
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 10px;
+}
+.not-found-text span{
+    color: var(--color-error);
+}
+
+.not-found-title {
+    padding-bottom: 10px;
+}
+
+.not-found-button {
+    padding: 7px 14px;
+    font-size: var(--font-size-xlarge);
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: var(--color-primary);
+    color: var(--color-white) /* Dark text for contrast */;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+}
+
+.not-found-button:hover {
+    background-color: var(--color-primary-dark); /* Sky blue background */
+    color: var(--color-white) /* Dark text for contrast */
+}
+
