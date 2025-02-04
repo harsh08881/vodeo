@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import usePeerConnection from "../hooks/useVideoCall";
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 
 const VideoChat = () => {
   const { peerId, callPeer, remoteStream, handleMatch, matchDetails } = usePeerConnection();
@@ -11,7 +13,9 @@ const VideoChat = () => {
   }, [matchDetails]);
 
   return (
-    <div>
+    <>
+    <Header/>
+    <div className="vodeo-h">
       <h1>Video Chat</h1>
       <button onClick={handleMatch}>Find Match</button>
       <div>
@@ -29,6 +33,8 @@ const VideoChat = () => {
       </div>
       {peerId && <p>Your Peer ID: {peerId}</p>}
     </div>
+    <Footer/>
+    </>
   );
 };
 

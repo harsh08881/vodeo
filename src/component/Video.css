@@ -5,11 +5,7 @@ body {
     padding: 0;
   }
   
-  h1 {
-    text-align: center;
-    color: var(--color-primary);
-    margin-top: 20px;
-  }
+ 
   
   /* Container Styling */
   .container {
@@ -21,6 +17,17 @@ body {
     padding: 20px;
   }
   
+  .container h1{
+    text-align: center;
+    color: var(--color-primary);
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .container p{
+    padding: 20px;
+  }
+
   button {
     background-color: var(--color-primary);
     color: white;

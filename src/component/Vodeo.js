@@ -3,6 +3,8 @@ import Peer from "peerjs";
 import io from "socket.io-client";
 import URL from "../utils/constant";
 import "./Video.css";
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
 
 const Videos = () => {
   const [peerId, setPeerId] = useState(null);
@@ -120,6 +122,8 @@ const Videos = () => {
   };
 
   return (
+    <>
+    <Header/>
     <div className="container">
       <h1>Video Chat</h1>
 
@@ -158,6 +162,8 @@ const Videos = () => {
         </div>
       )}
     </div>
+    <Footer/>
+    </>
   );
 };
 
