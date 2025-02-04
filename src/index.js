@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Video from './component/Video';
 import AuthWrapper from '../src/component/authWrapper'
 import DelayedLazyLoader from './component/DelayedLazy';
 import AnimationComponent from './component/animation';
@@ -17,10 +16,6 @@ const router = createBrowserRouter([
   },
   {
     path: '/video',
-    element: <AuthWrapper><Video/></AuthWrapper>,
-  },
-  {
-    path: '/vid',
     element:  (<DelayedLazyLoader delay={2000}>
       <AuthWrapper><Videos/></AuthWrapper>
     </DelayedLazyLoader>
