@@ -49,7 +49,6 @@ const App = () => {
       <LoadingProgressBar/>
       <Header />
       <div className="app-container">
-        {!user ? (
           <div className="login-container">
             <h2>Login to Continue</h2>
             <GoogleLoginComponent
@@ -57,14 +56,6 @@ const App = () => {
               onFailure={handleLoginFailure}
             />
           </div>
-        ) : (
-          <div className="profile-container">
-            <h2>Welcome, {user.name}!</h2>
-            <img src={user.picture} alt="Profile" style={{ width: 50, borderRadius: '50%' }} />
-            <p>Email: {user.email}</p>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
-          </div>
-        )}
       </div>
       <Footer />
     </div>

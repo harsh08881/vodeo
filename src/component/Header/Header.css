@@ -5,9 +5,6 @@
   box-sizing: border-box;
 }
 
-:root{
-  --font-size: 24px;
-}
 body{
   position: relative;
 }
@@ -90,7 +87,7 @@ body{
 .login-btn,
 .signup-btn {
   padding: 7px 14px;
-  font-size: 23px;
+  font-size: var(--font-size-large);
   font-weight: bold;
   border: none;
   border-radius: 20px;
@@ -104,17 +101,17 @@ body{
 }
 
 .login-btn:hover {
-  background-color: #475569; /* Darker slate gray */
+  background-color: var(--color-gray-800); /* Darker slate gray */
   transform: scale(1.05);
 }
 
 .signup-btn {
   background-color: var(--color-primary); /* Sky blue background */
-  color: var(--color-gray-800) /* Dark text for contrast */
+  color: var(--color-white) /* Dark text for contrast */
 }
 
 .signup-btn:hover {
-  background-color: #0ea5e9; /* Deeper sky blue */
+  background-color: var(--color-primary-dark); /* Deeper sky blue */
   transform: scale(1.05);
 }
 
