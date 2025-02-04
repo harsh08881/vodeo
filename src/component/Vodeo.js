@@ -15,7 +15,7 @@ const Videos = () => {
   const localVideoRef = useRef(null);
   const peer = useRef(null);
   const socket = useRef(null);
-
+  const canvasRef = useRef(null);
   useEffect(() => {
     const token = localStorage.getItem("token"); // Replace with actual token retrieval
 
@@ -115,54 +115,85 @@ const Videos = () => {
 
   const handleMatch = () => {
     if (peerId) {
-      setLoading(true); // Start loading when match button is clicked
+      setLoading(true);
+      setRemoteStream(null) // Start loading when match button is clicked
       console.log("Firing match event with Peer ID:", peerId);
       socket.current.emit("match", peerId);
     }
   };
 
+  useEffect(() => {
+    if (!remoteStream && canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+  
+      const renderStatic = () => {
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+  
+        for (let i = 0; i < pixels.length; i += 4) {
+          const randomValue = Math.random() * 255;
+          pixels[i] = randomValue;     // Red
+          pixels[i + 1] = randomValue; // Green
+          pixels[i + 2] = randomValue; // Blue
+          pixels[i + 3] = 255;         // Alpha (fully opaque)
+        }
+  
+        ctx.putImageData(imageData, 0, 0);
+        requestAnimationFrame(renderStatic);
+      };
+  
+      renderStatic();
+  
+     }
+  }, [remoteStream]);
+
   return (
     <>
-    <Header/>
-    <div className="container">
-      <h1>Video Chat</h1>
+      <Header />
+      <div className="container">
+        <h1>Video Chat</h1>
 
-      <button onClick={handleMatch} disabled={loading}>
-        {loading ? "Finding Match..." : "Find Match"}
-      </button>
+        <button onClick={handleMatch} disabled={loading}>
+          {loading ? "Finding Match..." : "Find Match"}
+        </button>
 
-      <div className="video-container">
-        <div className="remote-video">
-          <video
-            ref={(videoElement) => {
-              if (videoElement) {
-                videoElement.srcObject = remoteStream;
-                videoElement.play();
-              }
-            }}
-            autoPlay
-            controls
-          />
-          <label>Remote Video</label>
+        <div className="video-container">
+          <div className="remote-video">
+            <video
+              ref={(videoElement) => {
+                if (videoElement) {
+                  videoElement.srcObject = remoteStream;
+                  videoElement.play();
+                }
+              }}
+              autoPlay
+              controls
+            />
+
+            <label>Remote Video</label>
+            {!remoteStream && (
+              <canvas ref={canvasRef} className="canvas-peer"></canvas>
+            )}
+          </div>
+
+          <div className="local-video">
+            <video ref={localVideoRef} autoPlay controls />
+            <label>Local Video</label>
+          </div>
         </div>
 
-        <div className="local-video">
-          <video ref={localVideoRef} autoPlay controls />
-          <label>Local Video</label>
-        </div>
+        {peerId && <p>Your Peer ID: {peerId}</p>}
+
+        {matchDetails && (
+          <div className="match-details">
+            <h3>Matched With: {matchDetails.matchedWith}</h3>
+            <p>Common ID: {matchDetails.commonId}</p>
+            <p>Initiator: {matchDetails.isInitiator ? "Yes" : "No"}</p>
+          </div>
+        )}
       </div>
-
-      {peerId && <p>Your Peer ID: {peerId}</p>}
-
-      {matchDetails && (
-        <div className="match-details">
-          <h3>Matched With: {matchDetails.matchedWith}</h3>
-          <p>Common ID: {matchDetails.commonId}</p>
-          <p>Initiator: {matchDetails.isInitiator ? "Yes" : "No"}</p>
-        </div>
-      )}
-    </div>
-    <Footer/>
+      <Footer />
     </>
   );
 };
