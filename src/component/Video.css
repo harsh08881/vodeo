@@ -21,7 +21,7 @@ body {
     padding: 20px;
   }
   
-  button {
+  .btn {
     background-color: var(--color-primary);
     color: white;
     border: none;
@@ -33,12 +33,12 @@ body {
     transition: background-color 0.3s;
   }
   
-  button:disabled {
+  .btn:disabled {
     background-color: var(--color-primary-light);
     cursor: not-allowed;
   }
   
-  button:hover:not(:disabled) {
+  .btn:hover:not(:disabled) {
     background-color: var(--color-primary-dark);
   }
   
