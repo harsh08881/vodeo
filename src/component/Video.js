@@ -13,7 +13,7 @@ const VideoChat = () => {
   return (
     <div>
       <h1>Video Chat</h1>
-      <button onClick={handleMatch} className="btn">Find Match</button>
+      <button onClick={handleMatch}>Find Match</button>
       <div>
         {remoteStream && (
           <video

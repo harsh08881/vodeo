@@ -47,24 +47,6 @@ body {
 }
 
 
-button {
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #38bdf8; /* Sky blue */
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-
-button:hover {
-  background-color: #0ea5e9; /* Deeper sky blue */
-  transform: scale(1.05);
-}
-
 
 .logout-button {
   margin-top: 20px;
