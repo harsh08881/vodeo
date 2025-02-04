@@ -174,7 +174,6 @@ const Videos = () => {
                 }
               }}
               autoPlay
-              controls
             />
 
             <label>Remote Video</label>
@@ -184,7 +183,7 @@ const Videos = () => {
           </div>
 
           <div className="local-video">
-            <video ref={localVideoRef} autoPlay controls />
+            <video ref={localVideoRef} autoPlay />
             <label>Local Video</label>
           </div>
         </div>

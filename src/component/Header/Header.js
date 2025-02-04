@@ -24,7 +24,7 @@ const Header = () => {
           <Link to="/about" className="nav-link">
             About
           </Link>
-          <Link to="/vid" className="nav-link">
+          <Link to="/video" className="nav-link">
             Start a Call
           </Link>{" "}
           {/* Link to /vid */}

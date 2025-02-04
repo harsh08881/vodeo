@@ -30,7 +30,7 @@ const App = () => {
 
       // Optionally, persist user data to localStorage
       localStorage.setItem('token', userData);
-      navigate('/vid');
+      navigate('/video');
     } catch (error) {
       console.error('Failed to verify token with server:', error.response?.data || error.message);
     }
