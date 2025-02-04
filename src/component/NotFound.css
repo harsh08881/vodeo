@@ -13,6 +13,7 @@
 .not-found-image{
     padding: 2;
     width: 100%;
+    max-width: 400px;
     height: auto;
 }
 
@@ -48,3 +49,7 @@
     color: var(--color-white) /* Dark text for contrast */
 }
 
+
+@media (min-width:468px) {
+    
+}
