@@ -51,17 +51,21 @@ const styles = {
     flexDirection: 'column',
     height: '100vh',
     backgroundColor: '#f0f4f8',
+    width:"100%",
+    padding:'10px'
   },
   imageContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '20px',
-    width: '400px',
+    width: "80%",
+    maxWidth: '300px',
     height: 'auto',
     overflow: 'hidden',
     borderRadius:'90%',
     animation: 'pulse 2s infinite ease-in-out',
+    // padding:'10px',
   },
   image: {
     width: '100%',
