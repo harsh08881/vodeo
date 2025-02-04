@@ -7,6 +7,8 @@ import Footer from './component/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import './App.css'; // Import the CSS file
 import LoadingProgressBar from './component/progressbar';
+import photo from './assets/photo.png'
+import login from './assets/Login.png'
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -49,12 +51,18 @@ const App = () => {
       <LoadingProgressBar/>
       <Header />
       <div className="app-container">
-          <div className="login-container">
+          <div className="login-container"> 
+            
+          <img src={login} alt="Description" width="150" />;
             <h2>Login to Continue</h2>
             <GoogleLoginComponent
               onSuccess={handleLoginSuccess}
               onFailure={handleLoginFailure}
             />
+          </div>
+          <div className='imagecontainer'>
+            <img src={photo} alt="Description" width="300" />;
+
           </div>
       </div>
       <Footer />
