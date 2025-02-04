@@ -35,7 +35,7 @@ const Header = () => {
         <div className="header-actions">
           <button className="login-btn">Login</button>
           <button className="signup-btn">Sign Up</button>
-          <span class="material-symbols-outlined"  onClick={toggleNavbar}  style={{ cursor: "pointer", color: "#3f4a55", fontWeight: "bold" }}>menu</span>
+          <span className="material-symbols-outlined"  onClick={toggleNavbar}  style={{ cursor: "pointer", color: "#3f4a55", fontWeight: "bold" }}>menu</span>
         </div>
       </div>
     </header>

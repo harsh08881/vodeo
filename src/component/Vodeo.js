@@ -5,6 +5,7 @@ import URL from "../utils/constant";
 import "./Video.css";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
+import { clearToken } from "../utils/function";
 
 const Videos = () => {
   const [peerId, setPeerId] = useState(null);
@@ -43,6 +44,11 @@ const Videos = () => {
         callPeer(data.matchedWith);
       }
       setLoading(false); // Stop loading when match event is received
+    });
+
+     socket.current.on("token_expired", (data) => {
+      console.error("❌ Token Expired:", data.message);
+      clearToken(); // Automatically clear token and log out user
     });
 
     peer.current.on("open", (id) => {
