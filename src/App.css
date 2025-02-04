@@ -3,7 +3,7 @@
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  background-color: hsl(221deg 59% 46% / 11%); /* Light gray background */
+  background-color: var(--color-white); /* Light gray background */
   color: #333; /* Dark gray text */
   box-sizing: border-box;
 }

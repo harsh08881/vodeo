@@ -15,7 +15,7 @@ body{
 .header {
   min-width: 280px;
   width: 100%;
-  background-color: #F5F5F5; /* White background */
+  background-color: var(--color-white); /* White background */
   color: #5b4747; /* Black text */
   padding: 5px 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -50,7 +50,7 @@ body{
 .header-logo span{
    font-size: 24px;
    font-weight: 600;
-   color: #6A9CFB;
+   color: var(--color-primary);
 }
 
 .header-nav {
@@ -109,8 +109,8 @@ body{
 }
 
 .signup-btn {
-  background-color: #38bdf8; /* Sky blue background */
-  color: #1e293b; /* Dark text for contrast */
+  background-color: var(--color-primary); /* Sky blue background */
+  color: var(--color-gray-800) /* Dark text for contrast */
 }
 
 .signup-btn:hover {

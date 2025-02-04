@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+:root {
+    /* Primary Colors */
+  --color-primary: hsla(219, 92%, 70%, 1); /* #6A9CFB */
+  --color-primary-light: hsla(219, 92%, 85%, 1); /* Lighter version */
+  --color-primary-dark: hsla(219, 92%, 50%, 1); /* Darker version */
+
+  /* Secondary Colors */
+  --color-secondary: hsla(0, 100%, 70%, 1); /* #FF6B6B */
+  --color-secondary-light: hsla(0, 100%, 85%, 1);
+  --color-secondary-dark: hsla(0, 100%, 50%, 1);
+
+  /* Neutral Colors */
+  --color-white: hsla(0, 0%, 100%, 1); /* #FFFFFF */
+  --color-black: hsla(0, 0%, 0%, 1); /* #000000 */
+  --color-gray-100: hsla(0, 0%, 96%, 1);
+  --color-gray-200: hsla(0, 0%, 88%, 1);
+  --color-gray-300: hsla(0, 0%, 80%, 1);
+  --color-gray-400: hsla(0, 0%, 70%, 1);
+  --color-gray-500: hsla(0, 0%, 60%, 1);
+  --color-gray-600: hsla(0, 0%, 50%, 1);
+  --color-gray-700: hsla(0, 0%, 40%, 1);
+  --color-gray-800: hsla(0, 0%, 30%, 1);
+  --color-gray-900: hsla(0, 0%, 10%, 1);
+
+  /* Accent Colors */
+  --color-success: hsla(146, 63%, 50%, 1); /* #28C76F */
+  --color-warning: hsla(36, 100%, 60%, 1); /* #FF9F43 */
+  --color-error: hsla(0, 80%, 58%, 1); /* #EA5455 */
+  --color-info: hsla(187, 100%, 50%, 1); /* #00CFE8 */
+
+
+  /* Borders */
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 12px;
+  --border-thin: 1px solid var(--color-gray-300);
+  --border-medium: 2px solid var(--color-gray-500);
+  --border-thick: 3px solid var(--color-gray-700);
+  --border-primary: 2px solid var(--color-primary);
+  --border-secondary: 2px solid var(--color-secondary);
+  --border-success: 2px solid var(--color-success);
+  --border-warning: 2px solid var(--color-warning);
+  --border-error: 2px solid var(--color-error);
+  --border-info: 2px solid var(--color-info);
+
+   /* Box Shadows */
+   --shadow-small: 0px 2px 4px hsla(0, 0%, 0%, 0.1);
+   --shadow-medium: 0px 4px 8px hsla(0, 0%, 0%, 0.15);
+   --shadow-large: 0px 6px 12px hsla(0, 0%, 0%, 0.2);
+   --shadow-primary: 0px 4px 10px hsla(219, 92%, 70%, 0.3);
+   --shadow-secondary: 0px 4px 10px hsla(0, 100%, 70%, 0.3);
+   --shadow-success: 0px 4px 10px hsla(146, 63%, 50%, 0.3);
+   --shadow-warning: 0px 4px 10px hsla(36, 100%, 60%, 0.3);
+   --shadow-error: 0px 4px 10px hsla(0, 80%, 58%, 0.3);
+   --shadow-info: 0px 4px 10px hsla(187, 100%, 50%, 0.3);
+
+  --font-size: 0.5rem; /* Base font size */
+  --font-size-small: calc(1.5 * var(--font-size)); /* 0.75rem */
+  --font-size-medium: calc(1.75 * var(--font-size)); /* 1rem */
+  --font-size-large: calc(2.25 * var(--font-size)); /* 1.5rem */
+  --font-size-xlarge: calc(3 * var(--font-size)); /* 2rem */
+  --font-size-xxlarge: calc(4 * var(--font-size)); /* 2.5rem */
+}

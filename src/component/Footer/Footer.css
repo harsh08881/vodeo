@@ -3,7 +3,7 @@
 
 .footer {
   min-width: 320px;
-  background-color:  #F5F5F5;
+  background-color: var(--color-white);
   color: #000000;
   padding: 20px;
   text-align: center;
