@@ -14,6 +14,9 @@ const features = [
 
 const FeatureCards = () => {
   return (
+    <>
+    <div className="feature">
+    <h1>How Vodeo Helps You</h1>
     <div className="feature-grid">
       {features.map((feature) => (
         <div key={feature.id} className="feature-card">
@@ -23,6 +26,8 @@ const FeatureCards = () => {
         </div>
       ))}
     </div>
+    </div>
+    </>
   );
 };
 
