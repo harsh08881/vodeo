@@ -9,6 +9,7 @@ import './App.css'; // Import the CSS file
 import LoadingProgressBar from './component/progressbar';
 import photo from './assets/photo.png'
 import login from './assets/Login.png'
+import FeatureCards from './component/Cards';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -64,7 +65,9 @@ const App = () => {
             <img src={photo} alt="Description" width="300" />;
 
           </div>
-      </div>
+      </div> 
+      <FeatureCards/>
+
       <Footer />
     </div>
   );

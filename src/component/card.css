@@ -1,0 +1,30 @@
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .feature-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-image {
+    width: 80px;
+    border-radius: 10px;
+  }
+  
+  .feature-title {
+    font-size: var(--font-size-xlarge);
+    margin: 10px 0;
+  }
+  
+  .feature-description {
+    font-size: var(--font-size-large);
+    color: #555;
+  }
