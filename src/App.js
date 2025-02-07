@@ -54,7 +54,7 @@ const App = () => {
       <div className="app-container">
           <div className="login-container"> 
             
-          <img src={login} alt="Description" width="150" />;
+          <img src={login} alt="Description" width="150" />
             <h2>Login to Continue</h2>
             <GoogleLoginComponent
               onSuccess={handleLoginSuccess}
