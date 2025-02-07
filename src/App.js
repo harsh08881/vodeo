@@ -62,7 +62,7 @@ const App = () => {
             />
           </div>
           <div className='imagecontainer'>
-            <img src={photo} alt="Description" width="300" />;
+            <img src={photo} alt="Description" width="300" />
 
           </div>
       </div> 
