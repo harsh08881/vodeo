@@ -16,6 +16,9 @@ body {
   align-items: center;
   flex-wrap: wrap-reverse;
   padding: 10px;
+  background-color: var(--color-gray-100);
+  margin: 10px;
+  border-radius: 20px;
 }
 
 .login-container {
@@ -29,6 +32,8 @@ body {
   box-shadow: var(--shadow-medium);
   border-radius: 20px;
   min-height: 300px;
+  background-color: var(--color-white);
+  margin-bottom: 10px;
 }
 
 
@@ -44,6 +49,7 @@ body {
 
 .imagecontainer img {
   object-fit: cover;
+  border-radius: 20px;
 }
 
 

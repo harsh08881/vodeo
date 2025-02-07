@@ -66,6 +66,7 @@ const App = () => {
 
           </div>
       </div> 
+
       <FeatureCards/>
 
       <Footer />
