@@ -48,3 +48,11 @@
     font-size: var(--font-size-large);
     color: #555;
   }
+
+
+  @media (min-width:800px) {
+    .feature{
+      padding:100px;
+    }
+    
+  }
